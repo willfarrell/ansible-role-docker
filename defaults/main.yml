@@ -1,5 +1,7 @@
 ---
 
+docker_users:
+
 docker_tls_host: 127.0.0.1
 docker_tls_dir: /etc/docker/certs.d/regestry
 
