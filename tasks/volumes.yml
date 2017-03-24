@@ -1,10 +1,43 @@
 ---
 
-- name: Create Mount for /var/lib/docker
-  mount:
-    path: /var/lib/docker
-    src: /dev/xvda1
-    state: mounted
-    fstype: ext4
+#- name: Create Mount for /var/lib/docker
+#  mount:
+#    path: /var/lib/docker
+#    src: tmpfs
+#    state: mounted
+#    fstype: tmpfs
 
+- parted: device=/dev/xvda1 unit=MiB
+  register: xvda1_info
 
+- debug: var=xvda1_info
+
+#- name: Install `lvm`
+#  yum:
+#    name: lvm2
+#    state: present
+#
+#- lvg:
+#    vg: "{{ docker_vg }}"
+#    pvs: /dev/xvdf
+#    pesize: 2048
+#    state: present
+#
+#- lvol:
+#    vg: "{{ docker_vg }}"
+#    lv: "{{ docker_lv }}"
+#    size: 100%FREE
+#    state: present
+
+#- name:
+#  filesystem:
+#    dev: "{{ '/dev/mapper/' + item.vg | regex_replace('-', '--') + '-' + item.lv | regex_replace('-', '--') }}"
+#    fstype: ext4
+#
+#
+#- name:
+#  mount:
+#    path: "{{ docker_mount }}"
+#    src: "{{ '/dev/mapper/' + item.vg | regex_replace('-', '--') + '-' + item.lv | regex_replace('-', '--') }}"
+#    fstype: ext4
+#    state: mounted

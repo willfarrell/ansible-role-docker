@@ -30,5 +30,6 @@
     - "{{ docker_users }}"
 
 - name: reload sshd
-  notify:
-    - reloaded sshd
+  service:
+    name: sshd
+    state: reloaded
